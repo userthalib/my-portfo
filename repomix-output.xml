@@ -46,6 +46,7 @@ app/components/Contact.tsx
 app/components/Footer.tsx
 app/components/Hero.tsx
 app/components/Navbar.tsx
+app/components/ProgressBar.tsx
 app/components/Projects.tsx
 app/components/Reveal.tsx
 app/components/SpotlightCard.tsx
@@ -60,6 +61,12 @@ postcss.config.mjs
 public/file.svg
 public/globe.svg
 public/next.svg
+public/projects/pj1.jpg
+public/projects/pj2.png
+public/projects/pj3.png
+public/projects/pj4.png
+public/projects/pj5.png
+public/projects/pj6.png
 public/vercel.svg
 public/window.svg
 README.md
@@ -69,73 +76,117 @@ tsconfig.json
 <files>
 This section contains the contents of the repository's files.
 
+<file path=".gitignore">
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+</file>
+
 <file path="app/components/About.tsx">
 "use client";
 import Reveal from "./Reveal";
-
-const stats = [
-  { label: "Years Experience", value: "3+" },
-  { label: "Projects Completed", value: "15+" },
-  { label: "Coffee Consumed", value: "∞" }
-];
+import SpotlightCard from "./SpotlightCard"; // Reusing the glow effect!
+import { Code2, Globe, Cpu } from "lucide-react";
 
 export default function About() {
   return (
-    <section id="about" className="py-32 relative">
+    <section className="w-full relative overflow-hidden">
       <Reveal>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           
-          {/* Left Column: Narrative */}
-          <div className="lg:col-span-7">
-            {/* MATCHED HERO STYLE: Section Label */}
+          {/* Left Column: The Narrative */}
+          <div className="lg:col-span-7 relative z-10">
             <div className="flex items-center gap-3 mb-8">
-              <span className="h-px w-8 bg-blue-500"></span>
+              <span className="h-px w-12 bg-blue-500"></span>
               <span className="text-blue-400 font-bold text-xs tracking-widest uppercase">02. About Me</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight tracking-tight text-white">
-              I build <span className="text-slate-500">accessible</span>, <span className="text-slate-500">pixel-perfect</span> digital experiences.
+              Engineering <span className="text-gradient">precision</span> into every interaction.
             </h2>
             
-            <div className="space-y-6 text-slate-400 text-lg leading-relaxed">
+            <div className="space-y-6 text-slate-400 text-lg leading-relaxed font-light">
               <p>
-                I'm a Fullstack Developer based in Indonesia. I combine the logic of backend engineering with the creative aspects of frontend design.
+                My journey started when I tried to modify a game server script in 2018. That simple <span className="text-white font-medium">"what if?"</span> turned into a career obsession with system architecture.
               </p>
               <p>
-                I don't just write code; I solve problems. Whether it's optimizing a database query or creating a fluid animation, I focus on the <span className="text-white font-medium">user experience</span> above all else.
+                Today, I focus on the <span className="text-white font-medium">React & Laravel</span> ecosystem. I believe that a great application isn't just about clean code—it's about how that code makes the user <em>feel</em>. Speed, responsiveness, and interaction are my core design principles.
               </p>
             </div>
           </div>
 
-          {/* Right Column: Stats & Skills */}
-          <div className="lg:col-span-5 space-y-8">
-            {/* Stats Box */}
-            <div className="p-8 rounded-3xl bg-slate-900/30 border border-white/10 backdrop-blur-sm hover:border-white/20 transition-colors">
+          {/* Right Column: Interactive BENTO GRID for Stats */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* Stats Card */}
+            <SpotlightCard className="p-8 border-white/10 hover:border-white/20">
               <div className="grid grid-cols-2 gap-8">
-                {stats.map((stat, i) => (
-                  <div key={i}>
-                    <div className="text-4xl font-bold text-white mb-2 tracking-tight">{stat.value}</div>
-                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{stat.label}</div>
-                  </div>
-                ))}
+                <div>
+                   <div className="text-5xl font-bold text-white mb-2 tracking-tighter">3<span className="text-blue-500">+</span></div>
+                   <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Years Exp.</div>
+                </div>
+                <div>
+                   <div className="text-5xl font-bold text-white mb-2 tracking-tighter">15<span className="text-purple-500">+</span></div>
+                   <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Shipped</div>
+                </div>
               </div>
-            </div>
+            </SpotlightCard>
 
-            {/* Skills Box */}
-            <div className="p-8 rounded-3xl bg-slate-900/30 border border-white/10 backdrop-blur-sm hover:border-white/20 transition-colors">
-              <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-6">Technologies</h3>
+            {/* Tech Stack Card */}
+            <SpotlightCard className="p-8 border-white/10 hover:border-white/20">
+              <div className="flex items-center gap-3 mb-6">
+                <Code2 className="text-blue-400" size={20} />
+                <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">The Arsenal</h3>
+              </div>
               
-              {/* MATCHED HERO STYLE: Tech Pills */}
               <div className="flex flex-wrap gap-2">
-                {["JavaScript", "TypeScript", "React", "Next.js", "Laravel", "MySQL", "Tailwind", "Framer Motion"].map((tech) => (
-                  <span key={tech} className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-300 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-blue-500/30 hover:text-white transition-all cursor-default">
+                {["JavaScript", "TypeScript", "React", "Next.js", "Laravel", "PostgreSQL", "Tailwind", "Docker"].map((tech) => (
+                  <span key={tech} className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-400 bg-white/5 border border-white/5 rounded-full hover:bg-white/10 hover:text-white transition-all cursor-default">
                     {tech}
                   </span>
                 ))}
               </div>
-            </div>
-          </div>
+            </SpotlightCard>
 
+          </div>
         </div>
       </Reveal>
     </section>
@@ -145,62 +196,77 @@ export default function About() {
 
 <file path="app/components/Contact.tsx">
 "use client";
-import { Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin, Send } from 'lucide-react';
 import Reveal from "./Reveal";
-import SpotlightCard from "./SpotlightCard"; // We reuse the spotlight effect!
+import SpotlightCard from "./SpotlightCard"; 
 
 export default function Contact() {
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       <Reveal>
-        <div className="flex flex-col mb-12">
-          <span className="text-blue-400 font-mono text-xs tracking-widest uppercase mb-2">03. Contact</span>
-          <h2 className="text-3xl md:text-4xl font-bold">Get In Touch</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left: Info */}
-          <div className="space-y-6">
-            <p className="text-slate-400 text-lg leading-relaxed">
-              Have a project in mind or just want to chat? I'm currently open for new opportunities.
-            </p>
-            <div className="flex items-center gap-3 text-slate-300">
-              <Mail className="text-blue-400" size={20} />
-              <a href="mailto:alfalib01@gmail.com" className="hover:text-white transition">alfalib01@gmail.com</a>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center">
+          
+          {/* Left: Info & Call to Action */}
+          <div className="space-y-8">
+            <div className="flex flex-col">
+              <span className="text-blue-400 font-mono text-xs tracking-widest uppercase mb-2">03. Contact</span>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Let's build something <br /><span className="text-gradient">legendary.</span></h2>
             </div>
-            <div className="flex items-center gap-3 text-slate-300">
-              <MapPin className="text-blue-400" size={20} />
-              <span>Malang, Indonesia</span>
+            
+            <p className="text-slate-400 text-lg leading-relaxed font-light">
+              I'm currently available for freelance work and full-time positions. If you have a project that needs some creative injection, let's chat.
+            </p>
+            
+            <div className="space-y-4 pt-4">
+              <a href="mailto:alfalib01@gmail.com" className="flex items-center gap-4 group p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all">
+                <div className="p-3 rounded-full bg-blue-500/10 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                  <Mail size={20} />
+                </div>
+                <div>
+                   <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Email Me</div>
+                   <div className="text-white font-medium">alfalib01@gmail.com</div>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                <div className="p-3 rounded-full bg-purple-500/10 text-purple-400">
+                  <MapPin size={20} />
+                </div>
+                <div>
+                   <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Location</div>
+                   <div className="text-white font-medium">Indonesia (Remote Available)</div>
+                </div>
+              </div>
             </div>
           </div>
           
-          {/* Right: The Form (Wrapped in SpotlightCard) */}
-          <SpotlightCard className="p-8">
-            <form action="https://formspree.io/f/mojlywzz" method="POST" className="space-y-4 relative z-10">
+          {/* Right: Glass Form */}
+          <SpotlightCard className="p-8 md:p-10 border-white/10">
+            <form action="https://formspree.io/f/mojlywzz" method="POST" className="space-y-5 relative z-10">
               <div className="space-y-2">
-                <label className="text-xs font-mono text-slate-500 uppercase tracking-widest">Your Name</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Your Name</label>
                 <input 
-                  type="text" name="name" required 
-                  className="w-full bg-slate-950/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-blue-500/50 focus:outline-none text-slate-200"
+                  type="text" name="name" required placeholder="John Doe"
+                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-4 text-sm text-white placeholder:text-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-mono text-slate-500 uppercase tracking-widest">Your Email</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Your Email</label>
                 <input 
-                  type="email" name="email" required 
-                  className="w-full bg-slate-950/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-blue-500/50 focus:outline-none text-slate-200"
+                  type="email" name="email" required placeholder="john@example.com"
+                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-4 text-sm text-white placeholder:text-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-mono text-slate-500 uppercase tracking-widest">Message</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Message</label>
                 <textarea 
-                  name="message" rows={4} required 
-                  className="w-full bg-slate-950/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-blue-500/50 focus:outline-none text-slate-200 resize-none"
+                  name="message" rows={4} required placeholder="Tell me about your project..."
+                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-4 text-sm text-white placeholder:text-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all resize-none"
                 ></textarea>
               </div>
               
-              <button type="submit" className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-blue-500/20">
-                Send Message
+              <button type="submit" className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 group">
+                Send Message <Send size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </form>
           </SpotlightCard>
@@ -216,26 +282,65 @@ import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-[#050505] pt-20 pb-10">
-      <div className="max-w-5xl mx-auto px-6 flex flex-col items-center">
+    <footer className="border-t border-white/5 bg-[#020617] pt-24 pb-12 relative overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto px-6 flex flex-col items-center relative z-10">
         
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+        <h2 className="text-3xl md:text-5xl font-black mb-8 text-center tracking-tighter text-white">
           Building the web, <br />
-          <span className="text-slate-500">one pixel at a time.</span>
+          <span className="text-slate-600">pixel by pixel.</span>
         </h2>
 
-        <div className="flex gap-8 mb-12">
-          <a href="https://github.com/userthalib" className="text-slate-500 hover:text-white transition-colors"><Github size={24} /></a>
-          <a href="https://linkedin.com/in/irfanthalibalf" className="text-slate-500 hover:text-white transition-colors"><Linkedin size={24} /></a>
-          <a href="mailto:alfalib01@gmail.com" className="text-slate-500 hover:text-white transition-colors"><Mail size={24} /></a>
+        <div className="flex gap-8 mb-16">
+          {[
+            { icon: Github, link: "https://github.com/userthalib" },
+            { icon: Linkedin, link: "https://linkedin.com/in/irfanthalibalf" },
+            { icon: Mail, link: "mailto:alfalib01@gmail.com" }
+          ].map((social, i) => (
+             <a 
+               key={i} 
+               href={social.link} 
+               className="p-3 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300"
+             >
+               <social.icon size={22} />
+             </a>
+          ))}
         </div>
 
-        <div className="text-center text-xs text-slate-600 font-mono uppercase tracking-widest">
-          <p className="mb-2">© {new Date().getFullYear()} Irfan Thalib. All rights reserved.</p>
-          <p>Built with Next.js, Tailwind & Vercel.</p>
+        <div className="w-full h-px bg-white/5 mb-8"></div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center w-full text-xs font-bold text-slate-600 uppercase tracking-widest gap-4">
+          <p>© {new Date().getFullYear()} Irfan Thalib. All rights reserved.</p>
+          <p>Crafted with Next.js & Tailwind</p>
         </div>
       </div>
     </footer>
+  );
+}
+</file>
+
+<file path="app/components/ProgressBar.tsx">
+"use client";
+import { motion, useScroll, useSpring } from "framer-motion";
+
+export default function ProgressBar() {
+  const { scrollYProgress } = useScroll();
+  
+  // Smooth out the progress bar movement
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 origin-left z-[100]"
+      style={{ scaleX }}
+    />
   );
 }
 </file>
@@ -288,392 +393,18 @@ export default function SpotlightCard({ children, className = "" }: { children: 
       onMouseMove={handleMouseMove}
       onMouseEnter={handleFocus}
       onMouseLeave={handleBlur}
-      // Inside the return div className:
-className={`relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 ${className}`}
+      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 ${className}`}
     >
       <div
         className="pointer-events-none absolute -inset-px transition opacity-0 duration-300"
         style={{
           opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59, 130, 246, 0.15), transparent 40%)`,
+          // UPDATED GRADIENT: A mix of blue, purple and teal
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1), transparent 40%)`,
         }}
       />
       {children}
     </div>
-  );
-}
-</file>
-
-<file path=".gitignore">
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-</file>
-
-<file path="app/components/Hero.tsx">
-"use client";
-import { Github, Linkedin, Mail, ArrowRight, Download } from "lucide-react";
-import Reveal from "./Reveal";
-
-export default function Hero() {
-  return (
-    <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 flex flex-col items-center justify-center text-center overflow-hidden">
-      <Reveal>
-        
-        {/* 1. THE STATUS PILL (Centered & Glowing) */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-10 hover:bg-blue-500/20 transition-all cursor-default shadow-[0_0_10px_rgba(59,130,246,0.2)]">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-          </span>
-          Available for Opportunities
-        </div>
-        
-        {/* 2. THE INTRODUCTION (Small text) */}
-        <h2 className="text-lg md:text-xl text-blue-400 font-medium tracking-wide mb-4">
-          Hi, my name is Irfan
-        </h2>
-
-        {/* 3. THE MAIN TITLE (Huge, Centered, Gradient) */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tighter leading-[0.9] text-slate-100">
-          Full Stack <br /> 
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
-            Developer
-          </span>
-        </h1>
-        
-        {/* 4. THE SUBTITLE (Readable width) */}
-        <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed font-light tracking-wide">
-          Building scalable web applications with <span className="text-slate-100 font-medium">modern technologies</span>. 
-          I bridge the gap between complex backend logic and beautiful interfaces.
-        </p>
-
-        {/* 5. THE BUTTONS (Primary & Secondary) */}
-        <div className="flex flex-col sm:flex-row items-center gap-6 justify-center mb-16">
-          {/* Primary Button (Blue Gradient) */}
-          <a 
-            href="#portfolio" 
-            className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-bold text-sm tracking-wide overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:scale-105"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              View My Work <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12" />
-          </a>
-          
-          {/* Secondary Button (Outline) */}
-          <a 
-            href="#contact" 
-            className="px-8 py-4 bg-transparent border border-slate-700 text-slate-300 rounded-full font-bold text-sm tracking-wide hover:bg-slate-800 hover:text-white hover:border-slate-500 transition-all"
-          >
-            Get In Touch
-          </a>
-        </div>
-        
-        {/* 6. SOCIAL ICONS (Clean Row) */}
-        <div className="flex gap-6 justify-center items-center">
-          {[
-            { icon: Github, link: "https://github.com/userthalib" },
-            { icon: Linkedin, link: "https://linkedin.com/in/irfanthalibalf" },
-            { icon: Mail, link: "mailto:alfalib01@gmail.com" }
-          ].map((social, index) => (
-            <a 
-              key={index} 
-              href={social.link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-xl border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 hover:-translate-y-1"
-            >
-              <social.icon size={22}/>
-            </a>
-          ))}
-        </div>
-
-      </Reveal>
-    </section>
-  );
-}
-</file>
-
-<file path="app/components/Navbar.tsx">
-"use client";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#020617]/80 backdrop-blur-md border-b border-white/5 py-4" : "bg-transparent py-6"
-      }`}
-    >
-      {/* ALIGNMENT FIX: Using max-w-6xl to match the page content */}
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        
-        <div className="font-bold text-xl tracking-tighter text-white">
-          IRFAN<span className="text-blue-500">.</span>
-        </div>
-        
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-          <a href="#portfolio" className="hover:text-white transition-colors">Portfolio</a>
-          <a href="#about" className="hover:text-white transition-colors">About</a>
-          <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-          <a href="/resume.pdf" className="px-5 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white hover:text-black transition-all font-semibold">
-            Resume
-          </a>
-        </div>
-
-        <button className="md:hidden text-slate-400 hover:text-white" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#020617] border-b border-white/10 shadow-2xl p-6">
-          <div className="flex flex-col space-y-4 text-sm font-medium text-slate-400">
-             <a href="#portfolio" onClick={() => setIsOpen(false)}>Portfolio</a>
-             <a href="#about" onClick={() => setIsOpen(false)}>About</a>
-             <a href="#contact" onClick={() => setIsOpen(false)}>Contact</a>
-          </div>
-        </div>
-      )}
-    </nav>
-  );
-}
-</file>
-
-<file path="app/components/Projects.tsx">
-"use client";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
-import Image from 'next/image';
-import SpotlightCard from "./SpotlightCard";
-
-const projects = [
-  {
-    title: "Lumina Analytics",
-    description: "A comprehensive SaaS platform that processes over 1M+ data points daily. Features real-time websocket connections and AI-driven predictive charts.",
-    tech: ["Next.js", "TypeScript", "PostgreSQL", "OpenAI"],
-    link: "#",
-    github: "#",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    size: "large"
-  },
-  {
-    title: "DevFlow CMS",
-    description: "A headless CMS built for developers who hate bloat. Markdown support built-in.",
-    tech: ["React", "Node.js", "Redis"],
-    link: "#",
-    github: "#",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop",
-    size: "small"
-  },
-  {
-    title: "Finance Tracker",
-    description: "PWA for tracking personal expenses with offline support and sync.",
-    tech: ["Next.js", "PWA", "Tailwind"],
-    link: "#",
-    github: "#",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2032&auto=format&fit=crop",
-    size: "small"
-  }
-];
-
-export default function Projects() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {projects.map((project, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          className={project.size === 'large' ? 'md:col-span-2' : 'md:col-span-1'}
-        >
-          <SpotlightCard className="h-full group border-white/10 hover:border-blue-500/30 transition-colors">
-            <div className="relative h-full flex flex-col">
-              {/* Image Area */}
-              <div className={`relative w-full overflow-hidden ${project.size === 'large' ? 'h-64 md:h-96' : 'h-56'}`}>
-                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent z-10" />
-                 <Image 
-                   src={project.image} 
-                   alt={project.title} 
-                   fill
-                   className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                 />
-              </div>
-
-              {/* Content Area */}
-              <div className="p-8 flex flex-col flex-grow relative z-20 bg-[#020617]">
-                
-                {/* MATCHED HERO STYLE: Tech Pills */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((t) => (
-                    <span key={t} className="px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-300 bg-white/5 border border-white/10 rounded-full group-hover:bg-blue-500/10 group-hover:border-blue-500/20 group-hover:text-blue-300 transition-colors">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    {/* MATCHED HERO STYLE: Tight Heading */}
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight group-hover:text-blue-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-400 text-base leading-relaxed max-w-lg">
-                      {project.description}
-                    </p>
-                  </div>
-                  
-                  {/* Arrow Icon */}
-                  <div className="hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white transition-all duration-300">
-                    <ArrowUpRight size={20} className="transform group-hover:rotate-45 transition-transform duration-300" />
-                  </div>
-                </div>
-
-                <div className="flex gap-6 mt-auto pt-6">
-                  <a href={project.github} className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest group/link">
-                    <Github size={16} className="group-hover/link:text-blue-400 transition-colors"/> GitHub
-                  </a>
-                  <a href={project.link} className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest group/link">
-                    <ExternalLink size={16} className="group-hover/link:text-blue-400 transition-colors"/> Live Demo
-                  </a>
-                </div>
-              </div>
-            </div>
-          </SpotlightCard>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-</file>
-
-<file path="app/globals.css">
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* Clean, deep blue-black background */
-  --background: #020617; 
-  --foreground: #f8fafc;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Ensure the font is applied globally */
-  font-family: var(--font-geist-sans), sans-serif;
-}
-
-/* DELETED: The 'body::before' noise code is gone. */
-
-/* Highlight Color */
-::selection {
-  background-color: rgba(59, 130, 246, 0.3);
-  color: white;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #020617; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #475569; }
-</file>
-
-<file path="app/layout.tsx">
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Irfan | Fullstack Developer",
-  description: "Portfolio of Irfan, a Fullstack Developer specializing in React and PHP.",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-100 overflow-x-hidden`}>
-        {/* ATMOSPHERE: These blobs eliminate the "bald" look */}
-        <div className="fixed inset-0 -z-10 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-20%] w-[60%] h-[60%] rounded-full bg-blue-900/10 blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-900/10 blur-[120px]" />
-        </div>
-        
-        {children}
-      </body>
-    </html>
   );
 }
 </file>
@@ -697,53 +428,6 @@ const eslintConfig = defineConfig([
 ]);
 
 export default eslintConfig;
-</file>
-
-<file path="next.config.ts">
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-    ],
-  },
-};
-
-export default nextConfig;
-</file>
-
-<file path="package.json">
-{
-  "name": "my-portfolio",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "framer-motion": "^12.30.0",
-    "lucide-react": "^0.563.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  }
-}
 </file>
 
 <file path="postcss.config.mjs">
@@ -852,6 +536,442 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 }
 </file>
 
+<file path="app/components/Hero.tsx">
+"use client";
+import { Github, Linkedin, Mail, ArrowRight } from "lucide-react";
+import Reveal from "./Reveal";
+
+export default function Hero() {
+  return (
+    <section id="home" className="w-full flex flex-col items-center justify-center text-center overflow-hidden">
+      <Reveal>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-10 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          </span>
+          Available for Opportunities
+        </div>
+        
+        {/* Updated H1 for better mobile safety */}
+<h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tighter leading-[0.9] text-white break-words w-full max-w-4xl">
+  Irfan Thalib A <br /> 
+  <span className="text-gradient block mt-2 md:mt-0"> {/* 'block' helps it wrap nicely on tiny screens */}
+    Software Engineer
+  </span>
+</h1>
+        
+        <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed font-light tracking-wide">
+          Building scalable web applications with <span className="text-white font-medium">modern technologies</span>.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center gap-6 justify-center mb-16">
+          <a 
+            href="#portfolio" 
+            className="group relative px-8 py-4 bg-white text-black rounded-full font-bold text-sm tracking-wide overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              View My Work <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </span>
+          </a>
+        </div>
+        
+        {/* Social Icons */}
+        <div className="flex gap-6 justify-center items-center">
+          {[Github, Linkedin, Mail].map((Icon, i) => (
+             <div key={i} className="p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-blue-500/50 hover:text-blue-400 transition-all cursor-pointer">
+               <Icon size={22} />
+             </div>
+          ))}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+</file>
+
+<file path="app/components/Navbar.tsx">
+"use client";
+import { useState, useEffect } from "react";
+import { Menu, X, Eye, EyeOff } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
+  const [isVisible, setIsVisible] = useState(true); // Toggle state
+
+  // Close mobile menu if we hide the navbar
+  useEffect(() => {
+    if (!isVisible) setIsOpen(false);
+  }, [isVisible]);
+
+  return (
+    <>
+      {/* 1. THE TOGGLE BUTTON (Always Sticky) */}
+      <button 
+        onClick={() => setIsVisible(!isVisible)}
+        className="fixed top-6 right-6 z-[60] p-3 rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all backdrop-blur-md shadow-lg"
+        title={isVisible ? "Hide Navbar" : "Show Navbar"}
+      >
+        {isVisible ? <Eye size={20} /> : <EyeOff size={20} />}
+      </button>
+
+      {/* 2. THE NAVBAR (Conditional Render) */}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.nav
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.5, ease: "circOut" }}
+            className="fixed top-0 left-0 w-full z-50 flex justify-center pt-6"
+          >
+            {/* Glass Pill Container */}
+            <div className="mx-6 w-full max-w-5xl flex items-center justify-between px-6 py-4 rounded-full bg-[#020617]/70 backdrop-blur-xl border border-white/10 shadow-2xl">
+              
+              {/* Logo */}
+              <div className="font-bold text-lg tracking-tighter text-white select-none">
+                IRFAN<span className="text-teal-400">.</span>
+              </div>
+              
+              {/* Desktop Links (Numbered like reference) */}
+              <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a href="#home" className="hover:text-teal-400 transition-colors"><span className="text-teal-500/50 mr-1 text-xs font-mono">00.</span>Home</a>
+                <a href="#about" className="hover:text-teal-400 transition-colors"><span className="text-teal-500/50 mr-1 text-xs font-mono">01.</span>About</a>
+                <a href="#portfolio" className="hover:text-teal-400 transition-colors"><span className="text-teal-500/50 mr-1 text-xs font-mono">02.</span>Portfolio</a>
+                <a href="#contact" className="hover:text-teal-400 transition-colors"><span className="text-teal-500/50 mr-1 text-xs font-mono">03.</span>Contact</a>
+                
+                <a 
+                  href="/resume.pdf" 
+                  className="px-5 py-2 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-400 hover:bg-teal-500 hover:text-black transition-all font-semibold text-xs uppercase tracking-widest"
+                >
+                  Resume
+                </a>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button className="md:hidden text-slate-400 hover:text-white" onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? <X /> : <Menu />}
+              </button>
+            </div>
+
+            {/* Mobile Dropdown (Attached to bottom of pill) */}
+            {isOpen && (
+              <div className="absolute top-24 left-6 right-6 bg-[#020617] border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 text-center">
+                 <a href="#home" onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white py-2">Home</a>
+                 <a href="#about" onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white py-2">About</a>
+                 <a href="#portfolio" onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white py-2">Portfolio</a>
+                 <a href="#contact" onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white py-2">Contact</a>
+              </div>
+            )}
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+</file>
+
+<file path="app/components/Projects.tsx">
+"use client";
+import { motion } from "framer-motion";
+import { ExternalLink, Github, ArrowUpRight, Zap, BarChart3, Smartphone } from "lucide-react";
+import Image from 'next/image';
+import pj1 from '../../public/projects/pj1.jpg'; // Try importing directly if path strings fail!
+import pj2 from '../../public/projects/pj2.png';
+import pj3 from '../../public/projects/pj3.png';
+import SpotlightCard from "./SpotlightCard";
+
+const projects = [
+  {
+    title: "Nebula Finance",
+    description: "A robust financial analytics platform designed for high-frequency trading. Features real-time websocket connections and custom ML pipelines.",
+    tech: ["Next.js", "Rust", "PostgreSQL"],
+    link: "#",
+    github: "#",
+   // TRY THIS EXACT STRING (Ensure the file exists at public/projects/pj1.jpg)
+    image: "/projects/pj1.jpg",
+    icon: BarChart3,
+    size: "large",
+    gradient: "from-blue-500/20 to-purple-500/20"
+  },
+  {
+    title: "Velox Commerce",
+    description: "Headless e-commerce storefront with perfect lighthouse scores. Features optimistic UI updates and Stripe Connect integration.",
+    tech: ["React", "Shopify", "Redis"],
+    link: "#",
+    github: "#",
+    // POINTING TO LOCAL FILE
+    image: "/projects/pj2.png",
+    icon: Zap,
+    size: "small",
+    gradient: "from-amber-500/10 to-orange-500/10"
+  },
+  {
+    title: "Sync Mobile",
+    description: "Offline-first productivity PWA. Uses local-first architecture to sync data between devices when connectivity is restored.",
+    tech: ["React Native", "Supabase"],
+    link: "#",
+    github: "#",
+    // POINTING TO LOCAL FILE
+    image: "/projects/pj3.png",
+    icon: Smartphone,
+    size: "small",
+    gradient: "from-emerald-500/10 to-teal-500/10"
+  }
+];
+
+// ... rest of the component remains the same ...
+// (I will include the full render below to ensure you have the nice tags)
+
+export default function Projects() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {projects.map((project, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          className={project.size === 'large' ? 'md:col-span-2' : 'md:col-span-1'}
+        >
+          <SpotlightCard className="h-full group border-white/10 hover:border-white/20 transition-all duration-500">
+            <div className="relative h-full flex flex-col">
+              {/* Image Area */}
+              <div className={`relative w-full overflow-hidden ${project.size === 'large' ? 'h-72 md:h-96' : 'h-64'}`}>
+                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent z-10" />
+                 <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10`} />
+                 
+                 <Image 
+                   src={project.image} 
+                   alt={project.title} 
+                   fill
+                   className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                 />
+              </div>
+
+              {/* Content Area */}
+              <div className="p-8 flex flex-col flex-grow relative z-20 bg-[#020617] border-t border-white/5">
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tech.map((t) => (
+                    <span key={t} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-white/5 border border-white/5 rounded-full group-hover:bg-white/10 group-hover:text-slate-200 transition-colors">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight group-hover:text-blue-400 transition-colors flex items-center gap-3">
+                      <project.icon size={24} className="text-slate-500 group-hover:text-blue-500 transition-colors" />
+                      {project.title}
+                    </h3>
+                    <p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div className="hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 group-hover:bg-white group-hover:text-black transition-all duration-300">
+                    <ArrowUpRight size={20} className="transform group-hover:rotate-45 transition-transform duration-300" />
+                  </div>
+                </div>
+
+                <div className="flex gap-8 mt-auto pt-8">
+                  <a href={project.link} className="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">
+                    <ExternalLink size={18} /> Live Demo
+                  </a>
+                </div>
+              </div>
+            </div>
+          </SpotlightCard>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+</file>
+
+<file path="app/globals.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #020617; /* Deep Slate */
+  --foreground: #f8fafc;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* THIS IS THE MAGIC: */
+  scroll-snap-type: y mandatory; 
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* UTILITY CLASS FOR FULL SECTIONS */
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh; /* Force full height */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  padding-top: 80px; /* Space for navbar */
+  position: relative;
+}
+
+/* 2. TEXT GRADIENT UTILITY */
+/* Update this class to match the Teal vibe */
+.text-gradient {
+  background: linear-gradient(to right, #2dd4bf, #38bdf8, #818cf8); /* Teal -> Cyan -> Indigo */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Update selection color to Teal */
+::selection {
+  background-color: #0d9488; /* Teal 600 */
+  color: #ffffff;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #020617; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import ProgressBar from "./components/ProgressBar"; // Import it
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+// UPDATE METADATA (See Step 2 below for details)
+export const metadata: Metadata = {
+  title: {
+    default: "Irfan | Full Stack Developer",
+    template: "%s | Irfan Thalib"
+  },
+  description: "I build accessible, pixel-perfect, and performant web applications using the React and Laravel ecosystems.",
+  openGraph: {
+    title: "Irfan | Full Stack Developer",
+    description: "I build accessible, pixel-perfect, and performant web applications.",
+    url: "https://your-portfolio-url.com", // REPLACE THIS LATER
+    siteName: "Irfan's Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg", // We will create this file later
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-100 overflow-x-hidden`}>
+        {/* TOP SCROLL BAR */}
+        <ProgressBar />
+        
+        {/* AMBIENT GLOW */}
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-20%] w-[60%] h-[60%] rounded-full bg-blue-900/10 blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-900/10 blur-[120px]" />
+        </div>
+        
+        {children}
+      </body>
+    </html>
+  );
+}
+</file>
+
+<file path="next.config.ts">
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com', // Needed for premium Unsplash images
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "my-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "framer-motion": "^12.30.0",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+</file>
+
 <file path="app/page.tsx">
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -865,32 +985,44 @@ export default function Home() {
     <main className="relative selection:bg-blue-500/30">
       <Navbar />
       
-      {/* Main Container */}
-      <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        
-        {/* HERO: Centered by default inside Hero.tsx */}
-        <Hero />
-        
-        {/* SECTIONS: Left Aligned Content */}
-        {/* Notice we don't force 'text-center' here, so children default to left */}
-        
-        <section id="portfolio" className="py-32 border-t border-white/5">
-          <div className="flex flex-col mb-16 max-w-2xl"> 
+      {/* 1. HERO PAGE */}
+      <section className="snap-section">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
+          <Hero />
+        </div>
+      </section>
+      
+      {/* 2. ABOUT PAGE */}
+      <section id="about" className="snap-section border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
+           <About />
+        </div>
+      </section>
+
+      {/* 3. PROJECTS PAGE */}
+      <section id="portfolio" className="snap-section border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
+          <div className="flex flex-col mb-12 max-w-2xl"> 
             <span className="text-blue-400 font-mono text-xs tracking-widest uppercase mb-4">01. Portfolio</span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">Selected Works</h2>
             <p className="text-slate-400 text-lg">A collection of projects that showcase my passion for building clean, robust applications.</p>
           </div>
           <Projects />
-        </section>
-
-        <About />
-        
-        <section id="contact" className="py-32 border-t border-white/5">
-          <Contact />
-        </section>
-      </div>
+        </div>
+      </section>
       
-      <Footer />
+      {/* 4. CONTACT PAGE */}
+      <section id="contact" className="snap-section border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
+          <Contact />
+        </div>
+      </section>
+
+      {/* 5. FOOTER (Small section at the end) */}
+      <section className="snap-section h-auto min-h-0 py-0 flex justify-end">
+        <Footer />
+      </section>
+
     </main>
   );
 }
