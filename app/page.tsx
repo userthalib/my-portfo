@@ -1,7 +1,7 @@
 // app/page.tsx
-import Navbar from './components/Navbar.tsx';
-import Hero from './components/Hero.tsx';
-import Projects from './components/Projects.tsx';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Projects from './components/Projects';
 
 export default function Home() {
   return (
