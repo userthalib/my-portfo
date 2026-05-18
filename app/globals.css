@@ -1,55 +1,125 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --background: #020617; /* Deep Slate */
-  --foreground: #f8fafc;
+/* ── Tailwind v4: Theme tokens ───────────────────────────────── */
+@theme {
+  --color-bg-primary:   #070410;
+  --color-bg-surface:   #0d0a1a;
+  --color-purple-brand: #a855f7;
+  --color-violet-brand: #7c3aed;
+  --color-cyan-brand:   #06b6d4;
+
+  --font-display: "Space Grotesk", var(--font-geist-sans), system-ui, sans-serif;
+
+  --animate-float:       float 5s ease-in-out infinite;
+  --animate-pulse-glow:  pulse-glow 2.5s ease-in-out infinite;
+  --animate-spin-slow:   spin-slow 25s linear infinite;
+  --animate-spin-rev:    spin-slow 18s linear infinite reverse;
+  --animate-grad-shift:  gradient-shift 4s ease infinite;
 }
 
+/* ── Base ─────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  /* THIS IS THE MAGIC: */
-  scroll-snap-type: y mandatory; 
-  height: 100vh;
-  overflow-y: scroll;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  background-color: #070410;
+  color: #f1f5f9;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   overflow-x: hidden;
-  position: relative;
 }
 
-/* UTILITY CLASS FOR FULL SECTIONS */
-.snap-section {
-  scroll-snap-align: start;
-  min-height: 100vh; /* Force full height */
+/* Display font for headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-space-grotesk), var(--font-geist-sans), sans-serif;
+}
+
+/* ── Dot-grid background ──────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(168, 85, 247, 0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section helper ───────────────────────────────────────────── */
+.section-wrap {
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  padding-top: 80px; /* Space for navbar */
+  justify-content: center;
+  padding-top: 120px;
+  padding-bottom: 100px;
   position: relative;
 }
 
-/* 2. TEXT GRADIENT UTILITY */
-/* Update this class to match the Teal vibe */
+/* ── Gradients ────────────────────────────────────────────────── */
 .text-gradient {
-  background: linear-gradient(to right, #2dd4bf, #38bdf8, #818cf8); /* Teal -> Cyan -> Indigo */
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Update selection color to Teal */
-::selection {
-  background-color: #0d9488; /* Teal 600 */
-  color: #ffffff;
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #06b6d4, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #020617; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+/* ── Animations ───────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0%   50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.animate-float       { animation: float 5s ease-in-out infinite; }
+.animate-pulse-glow  { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-spin-slow   { animation: spin-slow 25s linear infinite; }
+.animate-spin-reverse{ animation: spin-slow 18s linear infinite reverse; }
+.animate-gradient    {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* ── Card base ────────────────────────────────────────────────── */
+.card-base {
+  background: rgba(13, 10, 26, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+/* ── Selection / Scrollbar ────────────────────────────────────── */
+::selection {
+  background-color: rgba(168, 85, 247, 0.4);
+  color: #fff;
+}
+
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: #070410; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #7c3aed, #a855f7);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: #a855f7; }

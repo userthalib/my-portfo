@@ -1,40 +1,40 @@
 "use client";
 import { useRef, useState } from "react";
 
-export default function SpotlightCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const divRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+interface Props {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export default function SpotlightCard({ children, className = "" }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return;
-    const div = divRef.current;
-    const rect = div.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const handleFocus = () => {
-    setOpacity(1);
-  };
-
-  const handleBlur = () => {
-    setOpacity(0);
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
   return (
     <div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleFocus}
-      onMouseLeave={handleBlur}
-      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 ${className}`}
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseEnter={() => setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      className={`relative overflow-hidden rounded-3xl card-base ${className}`}
     >
+      {/* Spotlight — purple / violet / cyan gradient */}
       <div
-        className="pointer-events-none absolute -inset-px transition opacity-0 duration-300"
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
         style={{
           opacity,
-          // UPDATED GRADIENT: A mix of blue, purple and teal
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1), transparent 40%)`,
+          background: `radial-gradient(700px circle at ${pos.x}px ${pos.y}px,
+            rgba(168, 85, 247, 0.12),
+            rgba(124, 58, 237, 0.08),
+            rgba(6, 182, 212, 0.05),
+            transparent 55%)`,
         }}
       />
       {children}
