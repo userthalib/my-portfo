@@ -110,6 +110,13 @@ body::before {
   backdrop-filter: blur(8px);
 }
 
+/* Hide elements on shorter viewports to prevent overlap */
+@media (max-height: 780px) {
+  .hide-on-short-screens {
+    display: none !important;
+  }
+}
+
 /* ── Selection / Scrollbar ────────────────────────────────────── */
 ::selection {
   background-color: rgba(168, 85, 247, 0.4);

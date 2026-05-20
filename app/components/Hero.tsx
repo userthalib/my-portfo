@@ -98,7 +98,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-28 pb-16 px-6"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-28 pb-32 lg:pb-44 px-6"
     >
       {/* Decorative slow-spinning rings: absolute positioned with pointer-events disabled */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
@@ -265,7 +265,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600"
+        className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600 hide-on-short-screens"
       >
         <span className="text-[10px] uppercase tracking-widest font-bold">Scroll</span>
         <ArrowDown size={16} className="animate-bounce" />
