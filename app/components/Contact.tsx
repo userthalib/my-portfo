@@ -1,8 +1,12 @@
 "use client";
-import { Mail, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, MapPin, Send, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import SpotlightCard from "./SpotlightCard";
 
+/**
+ * Personal contact information mappings.
+ * Contains icon assets, styling classes, values, and anchor targets.
+ */
 const CONTACT_INFO = [
   {
     icon: Mail,
@@ -42,9 +46,17 @@ const CONTACT_INFO = [
   },
 ];
 
+/**
+ * Contact Component
+ * 
+ * Configured as a dual-column contact section:
+ * - **Left Column**: List of channels (Email, GitHub, LinkedIn, Location) + Available Status pill.
+ * - **Right Column**: Interactive email contact form configured to submit directly via Formspree API.
+ */
 export default function Contact() {
   return (
     <div className="w-full">
+      {/* Section Header */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +85,7 @@ export default function Contact() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-        {/* ── Left: contact info ───────────────────────── */}
+        {/* ── Left: Contact Info ── */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -98,6 +110,7 @@ export default function Contact() {
               </div>
             );
 
+            // Conditionally wrap item in clickable anchor tags if an href is provided
             return c.href ? (
               <a
                 key={c.label}
@@ -109,6 +122,7 @@ export default function Contact() {
                 {Inner}
               </a>
             ) : (
+              /* Falls back to structured div if no link anchor targets are available */
               <div
                 key={c.label}
                 className="block p-4 rounded-2xl border border-white/6 bg-white/2"
@@ -118,7 +132,7 @@ export default function Contact() {
             );
           })}
 
-          {/* Availability note */}
+          {/* Timezone and Availability details */}
           <div className="mt-6 p-5 rounded-2xl border border-purple-500/20 bg-purple-500/5">
             <div className="flex items-center gap-2 mb-2">
               <span className="relative flex h-2.5 w-2.5">
@@ -134,7 +148,7 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        {/* ── Right: form ──────────────────────────────── */}
+        {/* ── Right: Form ── */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -142,6 +156,7 @@ export default function Contact() {
           transition={{ duration: 0.5, delay: 0.15 }}
         >
           <SpotlightCard className="p-7 md:p-9 border-white/8 hover:border-purple-500/20">
+            {/* Form submission path configured to submit data payloads directly to Formspree handler */}
             <form
               action="https://formspree.io/f/mojlywzz"
               method="POST"

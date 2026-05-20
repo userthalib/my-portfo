@@ -20,6 +20,9 @@ import Image from "next/image";
 ───────────────────────────────────────────────────────────── */
 const PHOTO_SRC: string | null = null;
 
+/**
+ * Array of roles displayed by the dynamic Typewriter effect subtitling.
+ */
 const ROLES = [
   "Full Stack Developer",
   "React Engineer",
@@ -27,38 +30,68 @@ const ROLES = [
   "UI/UX Enthusiast",
 ];
 
+/**
+ * Social channels mapping links to SVG icon instances.
+ */
 const SOCIALS = [
   { Icon: Github,   href: "https://github.com/userthalib",            label: "GitHub"   },
   { Icon: Linkedin, href: "https://linkedin.com/in/irfanthalibalf",   label: "LinkedIn" },
   { Icon: Mail,     href: "mailto:alfalib01@gmail.com",               label: "Email"    },
 ];
 
+/**
+ * Achievements stats showcased below the main text.
+ */
 const STATS = [
   { num: "3+",  label: "Years Exp."     },
   { num: "15+", label: "Projects Built" },
   { num: "∞",   label: "Lines of Code"  },
 ];
 
+/**
+ * Hero Component
+ * 
+ * Serves as the high-impact landing block of the site.
+ * 
+ * Core Developer Systems:
+ * 1. **Typewriter Loop Engine**: A React state machine powered by a `useEffect` loop that types, pauses, deletes, and cycles roles.
+ * 2. **Rotating Backdrop Ring Accents**: Decorative borders animated with continuous linear rotation keyframes.
+ * 3. **Initials / Photo Dual Renderer**: Conditionally displays initials `IT` or uses `next/image` with proper styling based on `PHOTO_SRC`.
+ */
 export default function Hero() {
+  // Track index of the current role string in the ROLES array
   const [roleIdx,    setRoleIdx   ] = useState(0);
+  
+  // Track string slice actively displayed on page
   const [displayed,  setDisplayed ] = useState("");
+  
+  // Flag indicating if typing behavior has switched to character deletion
   const [isDeleting, setIsDeleting] = useState(false);
 
-  /* Typewriter effect */
+  /**
+   * Typewriter State Loop Engine
+   * Executes recursively using state variables `displayed`, `isDeleting`, and `roleIdx` as trigger dependencies.
+   */
   useEffect(() => {
     const current = ROLES[roleIdx];
     let t: ReturnType<typeof setTimeout>;
 
     if (!isDeleting && displayed.length < current.length) {
+      // 1. Typing: append one character every 75ms
       t = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 75);
     } else if (!isDeleting && displayed.length === current.length) {
+      // 2. Pause: wait 2.2s before commencing deletion
       t = setTimeout(() => setIsDeleting(true), 2200);
     } else if (isDeleting && displayed.length > 0) {
+      // 3. Deleting: remove one character every 38ms (faster than typing)
       t = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 38);
     } else {
+      // 4. Complete: transition to the next role array index
       setIsDeleting(false);
       setRoleIdx((i) => (i + 1) % ROLES.length);
     }
+    
+    // Cleanup timeout references on state transitions to avoid side-effect leakage.
     return () => clearTimeout(t);
   }, [displayed, isDeleting, roleIdx]);
 
@@ -67,7 +100,7 @@ export default function Hero() {
       id="home"
       className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-28 pb-16 px-6"
     >
-      {/* Decorative slow-spinning rings */}
+      {/* Decorative slow-spinning rings: absolute positioned with pointer-events disabled */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
         <div className="w-[700px] h-[700px] rounded-full border border-purple-500/8  animate-spin-slow"  />
         <div className="absolute w-[500px] h-[500px] rounded-full border border-violet-500/10 animate-spin-reverse" />
@@ -76,23 +109,19 @@ export default function Hero() {
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto">
 
-        {/* ── Profile Photo ────────────────────────────────── */}
+        {/* ── Profile Photo Area ── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1     }}
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          {/* Outer glow ring */}
+          {/* Outer glow ring utilizing Tailwind custom glow animations */}
           <div className="relative w-28 h-28 md:w-32 md:h-32">
             <div className="absolute -inset-[3px] rounded-full bg-gradient-to-br from-purple-500 via-violet-600 to-cyan-500 animate-pulse-glow" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[#070410] bg-gradient-to-br from-purple-900/50 to-violet-900/40">
               {PHOTO_SRC ? (
-                /* ── PHOTO active ──────────────────────────────
-                   Next/Image is used for automatic optimisation.
-                   If PHOTO_SRC is an external URL add the domain
-                   to next.config.ts > images.remotePatterns.
-                ────────────────────────────────────────────── */
+                /* Next/Image layout: Fill relative container constraints */
                 <Image
                   src={PHOTO_SRC}
                   alt="Irfan Thalib"
@@ -101,7 +130,7 @@ export default function Hero() {
                   priority
                 />
               ) : (
-                /* ── Placeholder initials ─────────────────── */
+                /* Initials fallback placeholder: styled using text-gradient clipping */
                 <div className="w-full h-full flex items-center justify-center">
                   <span className="text-3xl font-black text-gradient select-none">IT</span>
                 </div>
@@ -110,7 +139,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* ── Status pill ──────────────────────────────────── */}
+        {/* ── Status Pill ── */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0  }}
@@ -124,7 +153,7 @@ export default function Hero() {
           Available for Opportunities
         </motion.div>
 
-        {/* ── Name ─────────────────────────────────────────── */}
+        {/* ── Name Layout ── */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0  }}
@@ -139,7 +168,7 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* ── Typewriter subtitle ───────────────────────────── */}
+        {/* ── Typewriter Subtitle ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -152,7 +181,7 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* ── Description ──────────────────────────────────── */}
+        {/* ── Description ── */}
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -166,7 +195,7 @@ export default function Hero() {
           <span className="text-purple-300 font-medium">React & Laravel</span> ecosystem.
         </motion.p>
 
-        {/* ── Stat chips ───────────────────────────────────── */}
+        {/* ── Stat Chips ── */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -184,7 +213,7 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* ── CTAs ─────────────────────────────────────────── */}
+        {/* ── Call To Actions (CTAs) ── */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -208,7 +237,7 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* ── Social icons ─────────────────────────────────── */}
+        {/* ── Social Icons ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -231,7 +260,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ── Scroll indicator ─────────────────────────────── */}
+      {/* ── Scroll Indicator Indicator ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -1,110 +1,82 @@
 "use client";
-import { Github, Linkedin, Mail, Twitter, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
+import { motion } from "framer-motion";
 
-const SOCIALS = [
-  { icon: Github,   href: "https://github.com/userthalib",          label: "GitHub"   },
-  { icon: Linkedin, href: "https://linkedin.com/in/irfanthalibalf", label: "LinkedIn" },
-  { icon: Mail,     href: "mailto:alfalib01@gmail.com",             label: "Email"    },
-  { icon: Twitter,  href: "#",                                       label: "Twitter"  },
+/**
+ * Footer navigation links list.
+ * Map to section anchors within the single page landing layout.
+ */
+const FOOTER_LINKS = [
+  { name: "Home",     href: "#home"      },
+  { name: "About",    href: "#about"     },
+  { name: "Services", href: "#services"  },
+  { name: "Work",     href: "#portfolio" },
+  { name: "Contact",  href: "#contact"   },
 ];
 
-const QUICK_LINKS = [
-  { name: "Home",      href: "#home"      },
-  { name: "About",     href: "#about"     },
-  { name: "Services",  href: "#services"  },
-  { name: "Work",      href: "#portfolio" },
-  { name: "Contact",   href: "#contact"   },
-];
-
+/**
+ * Footer Component
+ * 
+ * Closes the page content with navigation links and copyright declarations.
+ * 
+ * Core Developer Systems:
+ * 1. **Smooth Back-to-Top**: Programmatic viewport reset to `#home` anchor coordinates.
+ * 2. **Dynamic Calendar Stamping**: Automatic year updates using standard JavaScript `Date` API.
+ * 3. **Accent Background Lighting**: Visual dark-theme completion via bottom-aligned radial gradients.
+ */
 export default function Footer() {
+  /**
+   * Triggers a smooth scroll to the top of the viewport targeting the Hero anchor.
+   */
+  const scrollToTop = () => {
+    document.querySelector("#home")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <footer className="w-full border-t border-white/5 bg-[#070410] relative overflow-hidden">
+    <footer className="relative w-full border-t border-purple-500/10 bg-[#070410] pt-16 pb-8 overflow-hidden">
+      
+      {/* Decorative ambient bottom glow highlight */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-gradient-to-t from-purple-500/8 to-transparent rounded-full filter blur-[80px] pointer-events-none select-none" />
 
-      {/* Ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-purple-600/8 blur-[100px] rounded-full pointer-events-none" />
+      <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-col items-center">
+        
+        {/* ── Scroll To Top button trigger ── */}
+        <motion.button
+          onClick={scrollToTop}
+          whileHover={{ scale: 1.1, y: -2 }}
+          whileTap={{ scale: 0.95 }}
+          className="p-4 rounded-full border border-purple-500/20 bg-purple-500/10 text-purple-300 hover:text-white hover:border-purple-500/40 hover:bg-purple-500/20 transition-all duration-300 shadow-lg shadow-purple-950/40 mb-10 cursor-pointer"
+          aria-label="Back to top"
+        >
+          <ArrowUp size={20} className="animate-pulse" />
+        </motion.button>
 
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 py-16 relative z-10">
-
-        {/* Top row */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-12">
-
-          {/* Brand */}
-          <div className="max-w-xs">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center">
-                <span className="text-[11px] font-black text-white">IT</span>
-              </div>
-              <span className="font-black text-white text-lg tracking-tight">
-                Irfan Thalib
-              </span>
-            </div>
-            <p className="text-slate-500 text-sm leading-relaxed font-light">
-              Full Stack Developer crafting scalable, pixel-perfect web experiences from Indonesia.
-            </p>
-          </div>
-
-          {/* Quick links */}
-          <div>
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">
-              Quick Links
-            </h4>
-            <ul className="space-y-2">
-              {QUICK_LINKS.map((l) => (
-                <li key={l.name}>
-                  <a
-                    href={l.href}
-                    className="text-sm text-slate-400 hover:text-purple-300 transition-colors font-medium"
-                  >
-                    {l.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">
-              Connect
-            </h4>
-            <div className="flex flex-col gap-2">
-              {SOCIALS.map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-slate-400 hover:text-purple-300 transition-colors text-sm font-medium group"
-                >
-                  <Icon size={16} className="group-hover:text-purple-400 transition-colors" />
-                  {label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-purple-500/20 to-transparent mb-8" />
-
-        {/* Bottom row */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">
-            © {new Date().getFullYear()} Irfan Thalib — All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <p className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">
-              Crafted with Next.js & Tailwind
-            </p>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="p-2 rounded-full border border-white/8 text-slate-500 hover:text-purple-300 hover:border-purple-500/30 transition-all"
-              aria-label="Back to top"
+        {/* ── Footer navigation links ── */}
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-8">
+          {FOOTER_LINKS.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-white hover:underline decoration-purple-500 underline-offset-4 transition-all duration-300"
             >
-              <ArrowUp size={14} />
-            </button>
-          </div>
+              {link.name}
+            </a>
+          ))}
         </div>
+
+        {/* Brand Mark Initials visual indicator */}
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center select-none shadow-lg shadow-purple-500/20 mb-6">
+          <span className="text-[10px] font-black text-white tracking-tighter">IT</span>
+        </div>
+
+        {/* ── Copyright text with dynamic date generation ── */}
+        <p className="text-center text-[10px] font-bold uppercase tracking-widest text-slate-600">
+          © {new Date().getFullYear()} Irfan Thalib. All rights reserved.
+        </p>
       </div>
     </footer>
   );

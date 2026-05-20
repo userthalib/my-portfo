@@ -3,6 +3,10 @@ import { motion, type Variants } from "framer-motion";
 import { Code2, Layers, Server, Zap, Globe, Smartphone } from "lucide-react";
 import SpotlightCard from "./SpotlightCard";
 
+/**
+ * Technical specialization service cards array.
+ * Stores configuration metadata including icon classes, color styling properties, and tags.
+ */
 const SERVICES = [
   {
     icon: Globe,
@@ -66,19 +70,35 @@ const SERVICES = [
   },
 ];
 
+/**
+ * Motion variants: Container stagger
+ * Introduces 100ms sequence delays between sibling items appearing in view.
+ */
 const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1 } },
 };
+
+/**
+ * Motion variants: Single service card entry
+ * Animates opacity and coordinates when triggered by parent stagger sequences.
+ */
 const item: Variants = {
   hidden: { opacity: 0, y: 24 },
   show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
+/**
+ * Services Component
+ * 
+ * Showcases core skill competencies and professional specializations.
+ * Renders a grid layout containing micro-animated spotlight cards.
+ */
 export default function Services() {
   return (
     <section id="services" className="w-full relative overflow-hidden">
-      {/* Section label */}
+      
+      {/* Section Label: Standard headers with gradients and details */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -104,7 +124,7 @@ export default function Services() {
         </p>
       </motion.div>
 
-      {/* Grid */}
+      {/* Grid structure: Staggers children when entering scroll focus area */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -115,7 +135,7 @@ export default function Services() {
         {SERVICES.map((s) => (
           <motion.div key={s.title} variants={item}>
             <SpotlightCard className={`p-7 h-full border-white/6 hover:border-purple-500/20 group transition-all duration-300 hover:-translate-y-1`}>
-              {/* Top gradient band */}
+              {/* Top border color indicator: derived from parent gradient metadata */}
               <div className={`absolute inset-x-0 top-0 h-1 rounded-t-3xl bg-gradient-to-r ${s.gradient.replace("/20", "")}`} />
 
               <div className={`inline-flex p-3 rounded-2xl ${s.iconBg} mb-5`}>
@@ -129,6 +149,7 @@ export default function Services() {
                 {s.description}
               </p>
 
+              {/* Skill Tag list mapping badge strings */}
               <div className="flex flex-wrap gap-2 mt-auto">
                 {s.tags.map((tag) => (
                   <span

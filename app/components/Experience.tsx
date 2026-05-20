@@ -52,11 +52,25 @@ const TIMELINE = [
   },
 ];
 
+/**
+ * Brand-specific gradient classes mapping job roles (Purple) vs education records (Cyan).
+ */
 const COLORS: Record<string, string> = {
   work:      "from-purple-500 to-violet-600",
   education: "from-cyan-500  to-blue-500",
 };
 
+/**
+ * Experience Component
+ * 
+ * Renders an alternating timeline tracking past jobs and degrees.
+ * 
+ * Layout Mechanics:
+ * 1. **Vertical Guide Rail**: Absolute positioned line stretching top-to-bottom.
+ * 2. **Alternating Grid Layouts**: Uses index checks (`idx % 2 === 0`) to alternate cards between 
+ *    left-aligned and right-aligned blocks on desktop viewports.
+ * 3. **Highlighted Entries**: Increases border transparency and background glows when `entry.highlight` is enabled.
+ */
 export default function Experience() {
   return (
     <section id="experience" className="w-full relative overflow-hidden">
@@ -85,9 +99,9 @@ export default function Experience() {
         </p>
       </motion.div>
 
-      {/* Timeline */}
+      {/* Timeline wrapper */}
       <div className="relative">
-        {/* Vertical line */}
+        {/* Central vertical track line: shifts left on mobile viewports */}
         <div className="absolute left-[7px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500/40 via-violet-500/20 to-transparent" />
 
         <div className="space-y-10">
@@ -102,12 +116,12 @@ export default function Experience() {
                 idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
-              {/* Dot */}
+              {/* Timeline Center Dot Indicator */}
               <div className="absolute left-0 md:left-1/2 top-6 -translate-x-[3px] md:-translate-x-1/2 z-10">
                 <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${COLORS[entry.type]} shadow-lg shadow-purple-500/40`} />
               </div>
 
-              {/* Card */}
+              {/* Timeline Item Container card */}
               <div
                 className={`w-full md:w-[calc(50%-2rem)] pl-8 md:pl-0 ${
                   idx % 2 === 0 ? "md:pr-12" : "md:pl-12"
@@ -120,7 +134,7 @@ export default function Experience() {
                       : "border-white/6 hover:border-purple-500/20"
                   }`}
                 >
-                  {/* Period & type badge */}
+                  {/* Period & Type Badge details */}
                   <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
                     <span className="text-xs font-bold text-slate-500 uppercase tracking-widest font-mono">
                       {entry.period}
@@ -135,6 +149,8 @@ export default function Experience() {
                   <h3 className="text-lg font-bold text-white mb-1 tracking-tight">
                     {entry.role}
                   </h3>
+                  
+                  {/* Dynamic Company anchor link or text string fallback */}
                   {entry.companyUrl ? (
                     <a
                       href={entry.companyUrl}
@@ -149,10 +165,12 @@ export default function Experience() {
                       {entry.company}
                     </p>
                   )}
+                  
                   <p className="text-slate-400 text-sm leading-relaxed mb-4 font-light">
                     {entry.description}
                   </p>
 
+                  {/* Technology labels used in this specific timeline phase */}
                   <div className="flex flex-wrap gap-2">
                     {entry.tech.map((t) => (
                       <span
@@ -166,7 +184,7 @@ export default function Experience() {
                 </div>
               </div>
 
-              {/* Spacer for opposite side on desktop */}
+              {/* Spacer on desktop to offset the alternating layout card structure */}
               <div className="hidden md:block w-[calc(50%-2rem)]" />
             </motion.div>
           ))}

@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import SpotlightCard from "./SpotlightCard";
 
+/**
+ * Statistics metrics displayed on the right column card.
+ */
 const STATS = [
   { num: "3+",  label: "Years Experience", color: "text-purple-400" },
   { num: "15+", label: "Projects Shipped",  color: "text-cyan-400"   },
@@ -9,7 +12,10 @@ const STATS = [
   { num: "∞",   label: "Cups of Coffee",    color: "text-amber-400"  },
 ];
 
-/* ── Color map for tech pill categories ─── */
+/**
+ * Mapping of technologies to specialized border, background, and text colors.
+ * Ensures the tech stack capsules display distinct brand coloring (e.g. Yellow for JS, Cyan for React).
+ */
 const TECH_COLORS: Record<string, string> = {
   JavaScript:  "border-yellow-500/20 bg-yellow-500/8  text-yellow-300",
   TypeScript:  "border-blue-500/20   bg-blue-500/8    text-blue-300",
@@ -25,17 +31,27 @@ const TECH_COLORS: Record<string, string> = {
   Git:         "border-orange-500/20 bg-orange-500/8  text-orange-300",
 };
 
+/**
+ * List of technologies compiled into the tech stack display block.
+ */
 const TECH = [
   "JavaScript","TypeScript","React","Next.js",
   "Laravel","PostgreSQL","Tailwind","Docker",
   "React Native","Supabase","Redis","Git",
 ];
 
+/**
+ * About Component
+ * 
+ * Visual layout divided into:
+ * - **Left Side (Story/Bio)**: Introduces the developer, background story, design philosophy, and community mentorship activities.
+ * - **Right Side (Achievements/Stack)**: Interactive cards listing key experience statistics, visual tech stack capsules, and live availability indicators.
+ */
 export default function About() {
   return (
     <section id="about" className="w-full relative overflow-hidden">
 
-      {/* Watermark decoration */}
+      {/* Decorative Watermark: Large backdrop text element absolute positioned on right edge */}
       <div
         aria-hidden
         className="absolute -right-8 top-1/2 -translate-y-1/2 text-[10rem] md:text-[16rem] font-black text-purple-500/4 select-none pointer-events-none leading-none tracking-tighter"
@@ -45,7 +61,8 @@ export default function About() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start relative z-10">
 
-        {/* ── Left: Story ─────────────────────────────── */}
+        {/* ── Left: Story ──
+            Animates into view from the left when entering scroll bounds. */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -53,6 +70,7 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-7"
         >
+          {/* Header title prefix */}
           <div className="flex items-center gap-4 mb-8">
             <span className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500" />
             <span className="text-purple-400 font-mono text-xs tracking-widest uppercase font-bold">
@@ -89,7 +107,7 @@ export default function About() {
             </p>
           </div>
 
-          {/* CTA */}
+          {/* Contact Anchor trigger */}
           <a
             href="#contact"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-purple-500/30 text-purple-300 text-sm font-semibold hover:bg-purple-500/10 hover:border-purple-500/50 transition-all"
@@ -98,7 +116,8 @@ export default function About() {
           </a>
         </motion.div>
 
-        {/* ── Right: Cards ─────────────────────────────── */}
+        {/* ── Right: Cards ──
+            Animates into view from the right when scrolling. */}
         <motion.div
           initial={{ opacity: 0, x: 24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -106,7 +125,7 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="lg:col-span-5 space-y-5"
         >
-          {/* Stats grid */}
+          {/* Card A: Achievements and Quantifiable Metrics */}
           <SpotlightCard className="p-7 border-white/6 hover:border-purple-500/20">
             <div className="grid grid-cols-2 gap-6">
               {STATS.map((s) => (
@@ -122,7 +141,7 @@ export default function About() {
             </div>
           </SpotlightCard>
 
-          {/* Tech stack */}
+          {/* Card B: Technologies List with Brand-consistent color matching */}
           <SpotlightCard className="p-7 border-white/6 hover:border-purple-500/20">
             <div className="flex items-center gap-3 mb-5">
               <span className="text-xs font-black text-purple-400 uppercase tracking-widest font-mono">
@@ -143,7 +162,7 @@ export default function About() {
             </div>
           </SpotlightCard>
 
-          {/* Availability card */}
+          {/* Card C: Instant availability status card featuring live ping effect */}
           <SpotlightCard className="p-6 border-purple-500/20 hover:border-purple-500/35">
             <div className="flex items-center gap-3">
               <span className="relative flex h-3 w-3">

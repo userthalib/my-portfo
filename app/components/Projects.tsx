@@ -31,7 +31,7 @@ import SpotlightCard from "./SpotlightCard";
    gradient     : string  — Tailwind gradient classes for placeholder bg
    accentColor  : string  — Tailwind text color class for title hover
    ─────────────────────────────────────────────────────────────
-*/
+ */
 interface Project {
   title:       string;
   description: string;
@@ -48,6 +48,10 @@ interface Project {
   accentColor: string;
 }
 
+/**
+ * Static projects showcase list.
+ * Developers can modify values directly here to alter projects rendered on the portfolio grid.
+ */
 const PROJECTS: Project[] = [
   {
     title:       "Nebula Finance",
@@ -96,7 +100,10 @@ const PROJECTS: Project[] = [
   },
 ];
 
-/* ── Link button helper ─────────────────────────────────────── */
+/**
+ * LinkBtn Helper Component
+ * Renders standardized external links styled with uppercase headers and transition hover highlights.
+ */
 function LinkBtn({
   href, icon: Icon, label,
 }: { href: string; icon: React.ElementType; label: string }) {
@@ -112,6 +119,18 @@ function LinkBtn({
   );
 }
 
+/**
+ * Projects Component
+ * 
+ * Generates the Bento-inspired portfolio grid layout.
+ * 
+ * Layout Mechanics:
+ * 1. **Bento Grid Spanning**: Uses dynamic column classes. Featured entries spans two grid columns (`md:col-span-2`),
+ *    while regular entries sit side-by-side in single-column configurations.
+ * 2. **Dynamic Image Handling**: Attempts to load custom illustrations using `next/image` (with responsive object-cover settings).
+ *    If `p.image` is undefined, renders a gradient layout bordered by SVG bracket vector shapes.
+ * 3. **Action Links Block**: Renders action buttons conditionally based on URL property visibility.
+ */
 export default function Projects() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -127,19 +146,16 @@ export default function Projects() {
           <SpotlightCard className="h-full group border-white/6 hover:border-purple-500/25 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-900/20">
             <div className="relative h-full flex flex-col">
 
-              {/* ── Image / Placeholder area ──────────────── */}
+              {/* ── Image / Placeholder area ── */}
               <div className={`relative w-full overflow-hidden ${p.featured ? "h-64 md:h-80" : "h-52 md:h-64"}`}>
-                {/* Bottom fade */}
+                {/* Bottom gradient fade: prevents hard lines separating image from lower card boundaries */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0a1a] via-[#0d0a1a]/30 to-transparent z-10" />
 
-                {/* Hover gradient overlay */}
+                {/* Hover gradient overlay: brightens card on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} opacity-60 group-hover:opacity-90 transition-opacity duration-500 z-10`} />
 
                 {p.image ? (
-                  /* ── REAL IMAGE ──────────────────────────
-                     Place your image in /public/projects/
-                     or use an external URL.
-                  ─────────────────────────────────────── */
+                  /* Renders primary image utilizing Next.js layout fill properties */
                   <Image
                     src={p.image}
                     alt={p.title}
@@ -147,14 +163,13 @@ export default function Projects() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
-                  /* ── PLACEHOLDER ─────────────────────── */
+                  /* Fallback gradient panel featuring custom bracket vector drawings */
                   <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient}`}>
-                    {/* Corner bracket accents */}
+                    {/* Corner accents */}
                     <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-white/20 rounded-tl-sm" />
                     <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/20 rounded-tr-sm" />
                     <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-sm" />
                     <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/20 rounded-br-sm" />
-                    {/* Placeholder text */}
                     <div className="absolute inset-0 flex items-center justify-center z-20">
                       <span className="text-white/20 text-xs font-bold uppercase tracking-widest">
                         Add Image → image field
@@ -163,23 +178,23 @@ export default function Projects() {
                   </div>
                 )}
 
-                {/* Category badge */}
+                {/* Category tag */}
                 <div className="absolute top-4 left-4 z-20">
                   <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-black/50 border border-white/10 rounded-full text-slate-300 backdrop-blur-sm">
                     {p.category}
                   </span>
                 </div>
 
-                {/* Arrow icon */}
+                {/* Visual Arrow link indicator in top right header corner */}
                 <div className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
                   <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45 duration-300" />
                 </div>
               </div>
 
-              {/* ── Content area ──────────────────────────── */}
+              {/* ── Content area ── */}
               <div className="p-7 flex flex-col flex-grow border-t border-white/5 bg-[#0d0a1a]/40">
 
-                {/* Tech badges */}
+                {/* Technical badges mapping */}
                 <div className="flex flex-wrap gap-2 mb-5">
                   {p.tech.map((t) => (
                     <span
@@ -191,7 +206,7 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {/* Title + description */}
+                {/* Title and descriptions */}
                 <h3 className={`text-2xl md:text-3xl font-black tracking-tighter text-white mb-3 transition-colors duration-300 ${p.accentColor}`}>
                   {p.title}
                 </h3>
@@ -199,7 +214,7 @@ export default function Projects() {
                   {p.longDesc}
                 </p>
 
-                {/* Links */}
+                {/* Action CTA Buttons bar */}
                 <div className="flex flex-wrap items-center gap-5 pt-4 border-t border-white/5">
                   {p.liveUrl    && <LinkBtn href={p.liveUrl}    icon={ExternalLink} label="Live Demo" />}
                   {p.githubUrl  && <LinkBtn href={p.githubUrl}  icon={Github}       label="Source"   />}
