@@ -2,11 +2,11 @@
 
 /* ── Tailwind v4: Theme tokens ───────────────────────────────── */
 @theme {
-  --color-bg-primary:   #070410;
-  --color-bg-surface:   #0d0a1a;
-  --color-purple-brand: #a855f7;
-  --color-violet-brand: #7c3aed;
-  --color-cyan-brand:   #06b6d4;
+  --color-bg-primary:   var(--bg-primary);
+  --color-bg-surface:   var(--bg-surface);
+  --color-purple-brand: var(--purple-brand);
+  --color-violet-brand: var(--violet-brand);
+  --color-cyan-brand:   var(--cyan-brand);
 
   --font-display: "Space Grotesk", var(--font-geist-sans), system-ui, sans-serif;
 
@@ -17,16 +17,49 @@
   --animate-grad-shift:  gradient-shift 4s ease infinite;
 }
 
+/* ── Dynamic Theme CSS Variables ──────────────────────────────── */
+:root {
+  --bg-primary:       #070410;
+  --bg-surface:       rgba(13, 10, 26, 0.65);
+  --bg-surface-solid: #0d0a1a;
+  --purple-brand:     #a855f7;
+  --violet-brand:     #7c3aed;
+  --cyan-brand:       #06b6d4;
+  --text-primary:     #f1f5f9;
+  --text-secondary:   #94a3b8;
+  --border-primary:   rgba(255, 255, 255, 0.07);
+  --dot-color:        rgba(168, 85, 247, 0.07);
+  --selection-bg:     rgba(168, 85, 247, 0.4);
+}
+
+.light {
+  --bg-primary:       #f8fafc;
+  --bg-surface:       rgba(255, 255, 255, 0.8);
+  --bg-surface-solid: #ffffff;
+  --purple-brand:     #4f46e5; /* Indigo */
+  --violet-brand:     #6366f1; /* Cool Violet */
+  --cyan-brand:       #0284c7; /* Sky Blue */
+  --text-primary:     #0f172a; /* Slate 900 */
+  --text-secondary:   #475569; /* Slate 600 */
+  --border-primary:   rgba(15, 23, 42, 0.08);
+  --dot-color:        rgba(99, 102, 241, 0.08);
+  --selection-bg:     rgba(99, 102, 241, 0.2);
+}
+
 /* ── Base ─────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
-  background-color: #070410;
-  color: #f1f5f9;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Display font for headings */
@@ -39,10 +72,11 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(rgba(168, 85, 247, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 36px 36px;
   pointer-events: none;
   z-index: 0;
+  transition: background-image 0.3s ease;
 }
 
 /* ── Section helper ───────────────────────────────────────────── */
@@ -59,14 +93,14 @@ body::before {
 
 /* ── Gradients ────────────────────────────────────────────────── */
 .text-gradient {
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, var(--purple-brand) 0%, var(--violet-brand) 50%, var(--cyan-brand) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #06b6d4, #a855f7);
+  background: linear-gradient(135deg, var(--cyan-brand), var(--purple-brand));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -104,10 +138,12 @@ body::before {
 
 /* ── Card base ────────────────────────────────────────────────── */
 .card-base {
-  background: rgba(13, 10, 26, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-primary);
   border-radius: 1.5rem;
   backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px -10px var(--card-shadow, rgba(0,0,0,0));
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Hide elements on shorter viewports to prevent overlap */
@@ -119,14 +155,14 @@ body::before {
 
 /* ── Selection / Scrollbar ────────────────────────────────────── */
 ::selection {
-  background-color: rgba(168, 85, 247, 0.4);
-  color: #fff;
+  background-color: var(--selection-bg);
+  color: var(--text-primary);
 }
 
 ::-webkit-scrollbar       { width: 5px; }
-::-webkit-scrollbar-track { background: #070410; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #7c3aed, #a855f7);
+  background: linear-gradient(to bottom, var(--violet-brand), var(--purple-brand));
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover { background: #a855f7; }
+::-webkit-scrollbar-thumb:hover { background: var(--purple-brand); }

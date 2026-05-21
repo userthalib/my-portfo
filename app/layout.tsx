@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import ProgressBar from "./components/ProgressBar";
+import { AppProvider } from "./context/AppContext";
 
 /**
  * Configure Geist Sans font with custom CSS variable mapping.
@@ -74,22 +75,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased overflow-x-hidden`}
       >
-        {/* Visual page scroll progress indicator */}
-        <ProgressBar />
+        <AppProvider>
+          {/* Visual page scroll progress indicator */}
+          <ProgressBar />
 
-        {/* ── 3-Point Ambient Lighting ──
-            Positioned as fixed backdrop elements with z-index -10 to avoid overlapping foreground content.
-            Uses large blur settings to create smooth, non-intrusive accent lights. */}
-        <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-          {/* Purple — top left background glow */}
-          <div className="absolute -top-[20%] -left-[15%] w-[65%] h-[65%] rounded-full bg-purple-700/20 blur-[160px]" />
-          {/* Violet — bottom right background glow */}
-          <div className="absolute -bottom-[20%] -right-[15%] w-[55%] h-[55%] rounded-full bg-violet-800/18 blur-[140px]" />
-          {/* Cyan — centre pop background accent */}
-          <div className="absolute top-[35%] left-[25%] w-[45%] h-[40%] rounded-full bg-cyan-700/8 blur-[130px]" />
-        </div>
+          {/* ── 3-Point Ambient Lighting ──
+              Positioned as fixed backdrop elements with z-index -10 to avoid overlapping foreground content.
+              Uses large blur settings to create smooth, non-intrusive accent lights. */}
+          <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+            {/* Purple — top left background glow */}
+            <div className="absolute -top-[20%] -left-[15%] w-[65%] h-[65%] rounded-full bg-purple-700/20 light:bg-indigo-300/20 blur-[160px] transition-colors duration-500" />
+            {/* Violet — bottom right background glow */}
+            <div className="absolute -bottom-[20%] -right-[15%] w-[55%] h-[55%] rounded-full bg-violet-800/18 light:bg-violet-300/15 blur-[140px] transition-colors duration-500" />
+            {/* Cyan — centre pop background accent */}
+            <div className="absolute top-[35%] left-[25%] w-[45%] h-[40%] rounded-full bg-cyan-700/8 light:bg-sky-300/10 blur-[130px] transition-colors duration-500" />
+          </div>
 
-        {children}
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

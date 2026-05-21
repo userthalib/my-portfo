@@ -1,11 +1,11 @@
-import Navbar    from "./components/Navbar";
-import Hero      from "./components/Hero";
-import About     from "./components/About";
-import Services  from "./components/Services";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Services from "./components/Services";
 import Experience from "./components/Experience";
-import Projects  from "./components/Projects";
-import Contact   from "./components/Contact";
-import Footer    from "./components/Footer";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 /**
  * Section Wrapper Component
@@ -59,45 +59,27 @@ export default function Home() {
       <Hero />
 
       {/* 2. ABOUT — Story, Tech Stack & Quick Statistics */}
-      <Section id="about" className="border-t border-white/5">
+      <Section id="about" className="border-t border-border-primary">
         <About />
       </Section>
 
       {/* 3. SERVICES — Areas of Expertise cards layout */}
-      <Section id="services" className="border-t border-white/5">
+      <Section id="services" className="border-t border-border-primary">
         <Services />
       </Section>
 
       {/* 4. EXPERIENCE — Alternating timeline of past roles/degrees */}
-      <Section id="experience" className="border-t border-white/5">
+      <Section id="experience" className="border-t border-border-primary">
         <Experience />
       </Section>
 
       {/* 5. PORTFOLIO — Bento grid & projects summary */}
-      <Section id="portfolio" className="border-t border-white/5">
-        {/* Section header block with custom gradients and monospaced number markers */}
-        <div className="mb-14">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500" />
-            <span className="text-purple-400 font-mono text-xs tracking-widest uppercase font-bold">
-              04. Portfolio
-            </span>
-            <span className="h-px flex-1 bg-gradient-to-r from-purple-500 to-transparent" />
-          </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-5">
-            Selected <span className="text-gradient">Works</span>
-          </h2>
-          <p className="text-slate-400 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
-            A collection of projects that showcase my passion for building
-            clean, robust applications.
-          </p>
-        </div>
-        {/* Projects grid rendering dynamic items */}
+      <Section id="portfolio" className="border-t border-border-primary">
         <Projects />
       </Section>
 
       {/* 6. CONTACT — Direct email form setup */}
-      <Section id="contact" className="border-t border-white/5">
+      <Section id="contact" className="border-t border-border-primary">
         <Contact />
       </Section>
 

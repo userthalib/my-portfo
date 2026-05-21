@@ -210,6 +210,11 @@ def create_document():
     add_bullet("Footer Block", "Provides footer anchors, back-to-top button, and copyright labels.", "app/components/Footer.tsx")
     add_bullet("Scroll Progress Bar", "Framer Motion indicator showing scroll status at top of the window.", "app/components/ProgressBar.tsx")
     add_bullet("Spotlight Card Wrapper", "Calculates local mouse coordinate tracking to display hover radial gradient lighting.", "app/components/SpotlightCard.tsx")
+    add_bullet("Global State Context", "Manages the active theme (dark/light) and language (en/id), exposing preferences and the translation helper.", "app/context/AppContext.tsx")
+    add_bullet("Translation Dictionary", "Stores localized UI strings and structured data sets for English and Indonesian.", "app/data/translations.ts")
+    add_bullet("Playwright E2E Spec", "Automated test script validating the main features (theme, language, forms).", "e2e/portfolio.spec.ts")
+    add_bullet("Playwright Config", "Sets up local testing server and headless chrome capabilities.", "playwright.config.ts")
+    add_bullet("GitHub Actions CI Flow", "Runs automated E2E tests on every branch push or pull request to GitHub.", ".github/workflows/playwright.yml")
 
     # ─────────────────────────────────────────────────────────────
     # SECTION 3: STEP-BY-STEP CUSTOMIZATION
@@ -366,6 +371,60 @@ def create_document():
     add_bullet("Update Action URL", "Open app/components/Contact.tsx, locate the form element, and replace the form action endpoint URL with your Formspree form ID URL:", "app/components/Contact.tsx")
     add_code('<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" className="space-y-5">')
 
+    # 3.8 Customizing English & Indonesian Translations
+    h3_8 = add_p("3.8 Customizing English & Indonesian Translations", font_size=14, bold=True, color=COLOR_SECONDARY, before=12, after=6)
+    h3_8.paragraph_format.keep_with_next = True
+
+    p_3_8 = add_p(before=0, after=8)
+    add_run(p_3_8, "All textual content and items are managed dynamically in ")
+    add_run(p_3_8, "app/data/translations.ts", bold=True, font_name="Consolas", font_size=9.5, color=COLOR_MUTED)
+    add_run(p_3_8, ". This central dictionary handles both English (")
+    add_run(p_3_8, "en", bold=True)
+    add_run(p_3_8, ") and Indonesian (")
+    add_run(p_3_8, "id", bold=True)
+    add_run(p_3_8, ") versions. To customize descriptions or headings, edit the properties inside the respective language keys:")
+
+    add_code(
+        'export const TRANSLATIONS = {\n'
+        '  en: {\n'
+        '    hero: {\n'
+        '      greeting: "Hi, I am",\n'
+        '      description: "I build responsive, high-performance web applications...",\n'
+        '    },\n'
+        '  },\n'
+        '  id: {\n'
+        '    hero: {\n'
+        '      greeting: "Halo, saya",\n'
+        '      description: "Saya membangun aplikasi web yang responsif...",\n'
+        '    },\n'
+        '  },\n'
+        '};'
+    )
+
+    # 3.9 Configuring Custom Theme Colors
+    h3_9 = add_p("3.9 Configuring Custom Theme Colors", font_size=14, bold=True, color=COLOR_SECONDARY, before=12, after=6)
+    h3_9.paragraph_format.keep_with_next = True
+
+    p_3_9 = add_p(before=0, after=8)
+    add_run(p_3_9, "Color palettes are controlled via theme variables in ")
+    add_run(p_3_9, "app/globals.css", bold=True, font_name="Consolas", font_size=9.5, color=COLOR_MUTED)
+    add_run(p_3_9, ". Adjusting variables within the ")
+    add_run(p_3_9, ":root", bold=True, font_name="Consolas", font_size=9.5)
+    add_run(p_3_9, " block applies to Dark Mode (default). Adjusting values within the ")
+    add_run(p_3_9, ".light", bold=True, font_name="Consolas", font_size=9.5)
+    add_run(p_3_9, " block applies to Light Mode:")
+
+    add_code(
+        ':root {\n'
+        '  --bg-primary: #070410;       /* Dark background */\n'
+        '  --purple-brand: #a855f7;     /* Neon purple accent */\n'
+        '}\n\n'
+        '.light {\n'
+        '  --bg-primary: #f8fafc;       /* Slate-light background */\n'
+        '  --purple-brand: #6366f1;     /* Subdued indigo accent */\n'
+        '}'
+    )
+
     # ─────────────────────────────────────────────────────────────
     # SECTION 4: LOCAL DEVELOPMENT & DEPLOYMENT
     # ─────────────────────────────────────────────────────────────
@@ -407,6 +466,29 @@ def create_document():
         "Next.js build checks will run automatically during Vercel deployments. If you experience TypeScript compile issues, make sure your data constants structure is clean and you have not introduced syntax syntax errors in component code files.",
         title="COMPILE CHECKS"
     )
+
+    # 4.3 Automated End-to-End Testing (Playwright)
+    h4_3 = add_p("4.3 Automated End-to-End Testing (Playwright)", font_size=14, bold=True, color=COLOR_SECONDARY, before=12, after=6)
+    h4_3.paragraph_format.keep_with_next = True
+
+    p_4_3 = add_p(before=0, after=8)
+    add_run(p_4_3, "An automated E2E testing suite has been configured using Playwright. This suite acts like a real user, launching a real browser (Chromium) to click language and theme togglers and test form input validations. To run the automated tests:")
+
+    add_code(
+        '# 1. Run local headless test run (fast checks)\n'
+        'npm run test:e2e\n\n'
+        '# 2. Run interactive Playwright UI mode (browser visualization)\n'
+        'npm run test:e2e:ui'
+    )
+
+    # 4.4 Continuous Integration CI/CD Pipeline
+    h4_4 = add_p("4.4 Continuous Integration CI/CD Pipeline", font_size=14, bold=True, color=COLOR_SECONDARY, before=12, after=6)
+    h4_4.paragraph_format.keep_with_next = True
+
+    p_4_4 = add_p(before=0, after=8)
+    add_run(p_4_4, "A CI workflow is registered at ")
+    add_run(p_4_4, ".github/workflows/playwright.yml", bold=True, font_name="Consolas", font_size=9.5, color=COLOR_MUTED)
+    add_run(p_4_4, ". This automatically installs all project packages and browser dependencies, builds the production code, and runs E2E tests on every branch push or pull request to GitHub. If any flow tests fail, the deployment is blocked to protect the production live site.")
 
     # Save to user_documentation.docx
     doc.save("user_documentation.docx")
